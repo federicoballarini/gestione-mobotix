@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>Gestione Videocitofono Mobotix</title>
+
+		<meta name="description" content="overview &amp; stats" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="assets/font-awesome/4.2.0/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="assets/fonts/fonts.googleapis.com.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
+		<![endif]-->
+
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="assets/js/html5shiv.min.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="no-skin">
+    
+		<div id="navbar" class="navbar navbar-default">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				
+                <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+					<span class="sr-only">Toggle sidebar</span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button>
+                
+				<div class="navbar-header pull-left">
+					<a href="index.html" class="navbar-brand">
+						<small>
+							<center>Gestione Videocitofono</center>
+						</small>
+					</a>
+				</div>
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div id="sidebar" class="sidebar                  responsive">
+				<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+				</script>
+
+			
+            
+            <ul class="nav nav-list">
+					<li class="active">
+						<a href="index.html">
+							<i class="menu-icon fa fa-tachometer"></i>
+							<span class="menu-text"> Home </span>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+                    
+                    <li class="">
+						<a href="imp1.html">
+							<i class="menu-icon fa fa-cogs"></i>
+							<span class="menu-text"> Primo Pulsante </span>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+                    
+                    <li class="">
+						<a href="imp2.html">
+							<i class="menu-icon fa fa-cogs"></i>
+							<span class="menu-text"> Secondo Pulsante </span>
+						</a>
+
+						<b class="arrow"></b>
+                    </li>
+				</ul>
+            
+            
+            
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+				<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+				</script>
+			</div>
+
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->   
+                                <center>
+                                    <div style="padding-top:40%; padding-bottom:50%" data-role="page" id="pageone">
+                                        <p id="info1" name="info1" style="font-size:20px"><b>Trascina verso destra<br>per abilitare il pulsante</b></p>
+                                        
+                                        <div id="contbottone" style="display:none">
+                                            <button id="btn1" name="btn1" class="btn btn-lg btn-primary" onClick="apertura()">
+												<!--descrizione pulsante-->
+                                            </button>
+                                        </div>  
+                                    </div>
+                                    
+                                    <div data-role="page" id="pageone1">
+                                        <p id="info2" name="info2" style="font-size:20px"><b>Trascina verso destra<br>per abilitare il pulsante</b></p>
+                                        
+                                        <div id="contbottone1" style="display:none">
+                                            <button id="btn2" class="btn btn-lg btn-primary" onClick="apertura2()">
+												<!--descrizione pulsante-->
+                                            </button>
+                                        </div>  
+                                    </div>
+                                    
+								</center>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+			
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		
+		
+        
+        <script>
+				
+		//controllo se i bottoni sono configurati per interfacciarsi con il server
+		
+		var primo=false;
+		var secondo=false;
+		
+		if(window.localStorage.getItem("ip1") == "" || window.localStorage.getItem("porta1") == "" || window.localStorage.getItem("ip1") == null || window.localStorage.getItem("porta1") == null){
+			primo=true;
+		}else{
+			primo=false;
+		}
+		
+		if(window.localStorage.getItem("ip2") == "" || window.localStorage.getItem("porta2") == "" || window.localStorage.getItem("ip2") == null || window.localStorage.getItem("porta2") == null){
+			secondo=true;
+		}else{
+			secondo=false;
+		}
+		
+		
+		
+		
+		if(window.localStorage.getItem("descrizione1")!=null){
+			document.getElementById("btn1").innerHTML="<i class=\"ace-icon fa fa-key align-top bigger-125\"></i>Apri "+window.localStorage.getItem("descrizione1");
+		}else{
+			document.getElementById("btn1").innerHTML="<i class=\"ace-icon fa fa-key align-top bigger-125\"></i>Apri";
+		}
+		
+		if(window.localStorage.getItem("descrizione2")!=null){
+			document.getElementById("btn2").innerHTML="<i class=\"ace-icon fa fa-key align-top bigger-125\"></i>Apri "+window.localStorage.getItem("descrizione2");
+		}else{
+			document.getElementById("btn2").innerHTML="<i class=\"ace-icon fa fa-key align-top bigger-125\"></i>Apri";
+		}
+		
+		</script>
+		
+		
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script src="assets/js/jquery.2.1.1.min.js"></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script src="assets/js/jquery.1.11.1.min.js"></script>
+<![endif]-->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!-- ace scripts -->
+		<script src="assets/js/ace-elements.min.js"></script>
+		<script src="assets/js/ace.min.js"></script>
+
+        
+        <script>
+		
+		
+		//primo swipe
+		
+		var touchStartCoords =  {'x':-1, 'y':-1}, // X and Y coordinates on mousedown or touchstart events.
+		touchEndCoords = {'x':-1, 'y':-1},// X and Y coordinates on mouseup or touchend events.
+		direction = 'undefined',// Swipe direction
+		minDistanceXAxis = 30,// Min distance on mousemove or touchmove on the X axis
+		maxDistanceYAxis = 30,// Max distance on mousemove or touchmove on the Y axis
+		maxAllowedTime = 1000,// Max allowed time between swipeStart and swipeEnd
+		startTime = 0,// Time on swipeStart
+		elapsedTime = 0,// Elapsed time between swipeStart and swipeEnd
+		targetElement = document.getElementById('info1');// Element to delegate
+
+		function swipeStart(e) {
+		  e = e ? e : window.event;
+		  e = ('changedTouches' in e)?e.changedTouches[0] : e;
+		  touchStartCoords = {'x':e.pageX, 'y':e.pageY};
+		  startTime = new Date().getTime();
+		  //targetElement.textContent = " ";
+		}
+		
+		function swipeMove(e){
+		  e = e ? e : window.event;
+		  e.preventDefault();
+		}
+		
+		function swipeEnd(e) {
+		  e = e ? e : window.event;
+		  e = ('changedTouches' in e)?e.changedTouches[0] : e;
+		  touchEndCoords = {'x':e.pageX - touchStartCoords.x, 'y':e.pageY - touchStartCoords.y};
+		  elapsedTime = new Date().getTime() - startTime;
+		  if (elapsedTime <= maxAllowedTime){
+			if (Math.abs(touchEndCoords.x) >= minDistanceXAxis && Math.abs(touchEndCoords.y) <= maxDistanceYAxis){
+			  direction = (touchEndCoords.x < 0)? 'left' : 'right';
+			  switch(direction){
+				case 'left':
+				  //targetElement.textContent = "Left swipe detected";
+				  break;
+				case 'right':
+				  targetElement.style="display:none";
+				  document.getElementById("contbottone").style="display:block";
+				  break;
+			  }
+			}
+		  }
+		}
+		
+		function addMultipleListeners(el, s, fn) {
+		  var evts = s.split(' ');
+		  for (var i=0, iLen=evts.length; i<iLen; i++) {
+			el.addEventListener(evts[i], fn, false);
+		  }
+		}
+		
+		addMultipleListeners(targetElement, 'mousedown touchstart', swipeStart);
+		addMultipleListeners(targetElement, 'mousemove touchmove', swipeMove);
+		addMultipleListeners(targetElement, 'mouseup touchend', swipeEnd);
+		
+		</script>
+		
+        
+        <script>
+		
+		
+		//secondo swipe
+		
+		var touchStartCoords1 =  {'x':-1, 'y':-1}, // X and Y coordinates on mousedown or touchstart events.
+		touchEndCoords1 = {'x':-1, 'y':-1},// X and Y coordinates on mouseup or touchend events.
+		direction1 = 'undefined',// Swipe direction
+		minDistanceXAxis1 = 30,// Min distance on mousemove or touchmove on the X axis
+		maxDistanceYAxis1 = 30,// Max distance on mousemove or touchmove on the Y axis
+		maxAllowedTime1 = 1000,// Max allowed time between swipeStart and swipeEnd
+		startTime1 = 0,// Time on swipeStart
+		elapsedTime1 = 0,// Elapsed time between swipeStart and swipeEnd
+		targetElement1 = document.getElementById('info2');// Element to delegate
+
+		function swipeStart1(e) {
+		  e = e ? e : window.event;
+		  e = ('changedTouches' in e)?e.changedTouches[0] : e;
+		  touchStartCoords1 = {'x':e.pageX, 'y':e.pageY};
+		  startTime1 = new Date().getTime();
+		  //targetElement.textContent = " ";
+		}
+		
+		function swipeMove1(e){
+		  e = e ? e : window.event;
+		  e.preventDefault();
+		}
+		
+		function swipeEnd1(e) {
+		  e = e ? e : window.event;
+		  e = ('changedTouches' in e)?e.changedTouches[0] : e;
+		  touchEndCoords1 = {'x':e.pageX - touchStartCoords1.x, 'y':e.pageY - touchStartCoords1.y};
+		  elapsedTime1 = new Date().getTime() - startTime1;
+		  if (elapsedTime1 <= maxAllowedTime1){
+			if (Math.abs(touchEndCoords1.x) >= minDistanceXAxis1 && Math.abs(touchEndCoords1.y) <= maxDistanceYAxis1){
+			  direction1 = (touchEndCoords1.x < 0)? 'left' : 'right';
+			  switch(direction1){
+				case 'left':
+				  //targetElement.textContent = "Left swipe detected";
+				  break;
+				case 'right':
+				  targetElement1.style="display:none";
+				  document.getElementById("contbottone1").style="display:block";
+				  break;
+			  }
+			}
+		  }
+		}
+		
+		function addMultipleListeners1(el, s, fn) {
+		  var evts = s.split(' ');
+		  for (var i=0, iLen=evts.length; i<iLen; i++) {
+			el.addEventListener(evts[i], fn, false);
+		  }
+		}
+		
+		addMultipleListeners1(targetElement1, 'mousedown touchstart', swipeStart1);
+		addMultipleListeners1(targetElement1, 'mousemove touchmove', swipeMove1);
+		addMultipleListeners1(targetElement1, 'mouseup touchend', swipeEnd1);
+		
+		
+		
+		
+		//swipe di ritorno 1
+		
+		var touchStartCoords2 =  {'x':-1, 'y':-1}, // X and Y coordinates on mousedown or touchstart events.
+		touchEndCoords2 = {'x':-1, 'y':-1},// X and Y coordinates on mouseup or touchend events.
+		direction2 = 'undefined',// Swipe direction
+		minDistanceXAxis2 = 30,// Min distance on mousemove or touchmove on the X axis
+		maxDistanceYAxis2 = 30,// Max distance on mousemove or touchmove on the Y axis
+		maxAllowedTime2 = 1000,// Max allowed time between swipeStart and swipeEnd
+		startTime2 = 0,// Time on swipeStart
+		elapsedTime2 = 0,// Elapsed time between swipeStart and swipeEnd
+		targetElement2 = document.getElementById("contbottone");// Element to delegate
+
+		function swipeStart2(e) {
+		  e = e ? e : window.event;
+		  e = ('changedTouches' in e)?e.changedTouches[0] : e;
+		  touchStartCoords2 = {'x':e.pageX, 'y':e.pageY};
+		  startTime2 = new Date().getTime();
+		  //targetElement.textContent = " ";
+		}
+		
+		function swipeMove2(e){
+		  e = e ? e : window.event;
+		  e.preventDefault();
+		}
+		
+		function swipeEnd2(e) {
+		  e = e ? e : window.event;
+		  e = ('changedTouches' in e)?e.changedTouches[0] : e;
+		  touchEndCoords2 = {'x':e.pageX - touchStartCoords2.x, 'y':e.pageY - touchStartCoords2.y};
+		  elapsedTime2 = new Date().getTime() - startTime2;
+		  if (elapsedTime2 <= maxAllowedTime2){
+			if (Math.abs(touchEndCoords2.x) >= minDistanceXAxis2 && Math.abs(touchEndCoords2.y) <= maxDistanceYAxis2){
+			  direction2 = (touchEndCoords2.x < 0)? 'left' : 'right';
+			  switch(direction2){
+				case 'left':
+				  targetElement2.style="display:none";
+				  document.getElementById("info1").style="display:block; font-size:20px";
+				  break;
+				case 'right':
+				  //swipe verso destra
+				  break;
+			  }
+			}
+		  }
+		}
+		
+		function addMultipleListeners2(el, s, fn) {
+		  var evts = s.split(' ');
+		  for (var i=0, iLen=evts.length; i<iLen; i++) {
+			el.addEventListener(evts[i], fn, false);
+		  }
+		}
+		
+		addMultipleListeners2(targetElement2, 'mousedown touchstart', swipeStart2);
+		addMultipleListeners2(targetElement2, 'mousemove touchmove', swipeMove2);
+		addMultipleListeners2(targetElement2, 'mouseup touchend', swipeEnd2);
+		
+		
+		
+		//swipe di ritorno 2
+		
+		var touchStartCoords3 =  {'x':-1, 'y':-1}, // X and Y coordinates on mousedown or touchstart events.
+		touchEndCoords3 = {'x':-1, 'y':-1},// X and Y coordinates on mouseup or touchend events.
+		direction3 = 'undefined',// Swipe direction
+		minDistanceXAxis3 = 30,// Min distance on mousemove or touchmove on the X axis
+		maxDistanceYAxis3 = 30,// Max distance on mousemove or touchmove on the Y axis
+		maxAllowedTime3 = 1000,// Max allowed time between swipeStart and swipeEnd
+		startTime3 = 0,// Time on swipeStart
+		elapsedTime3 = 0,// Elapsed time between swipeStart and swipeEnd
+		targetElement3 = document.getElementById("contbottone1");// Element to delegate
+
+		function swipeStart3(e) {
+		  e = e ? e : window.event;
+		  e = ('changedTouches' in e)?e.changedTouches[0] : e;
+		  touchStartCoords3 = {'x':e.pageX, 'y':e.pageY};
+		  startTime3 = new Date().getTime();
+		  //targetElement.textContent = " ";
+		}
+		
+		function swipeMove3(e){
+		  e = e ? e : window.event;
+		  e.preventDefault();
+		}
+		
+		function swipeEnd3(e) {
+		  e = e ? e : window.event;
+		  e = ('changedTouches' in e)?e.changedTouches[0] : e;
+		  touchEndCoords3 = {'x':e.pageX - touchStartCoords3.x, 'y':e.pageY - touchStartCoords3.y};
+		  elapsedTime3 = new Date().getTime() - startTime3;
+		  if (elapsedTime3 <= maxAllowedTime3){
+			if (Math.abs(touchEndCoords3.x) >= minDistanceXAxis3 && Math.abs(touchEndCoords3.y) <= maxDistanceYAxis3){
+			  direction3 = (touchEndCoords3.x < 0)? 'left' : 'right';
+			  switch(direction3){
+				case 'left':
+				  targetElement3.style="display:none";
+				  document.getElementById("info2").style="display:block; font-size:20px";
+				  break;
+				case 'right':
+				  //swipe verso destra
+				  break;
+			  }
+			}
+		  }
+		}
+		
+		function addMultipleListeners3(el, s, fn) {
+		  var evts = s.split(' ');
+		  for (var i=0, iLen=evts.length; i<iLen; i++) {
+			el.addEventListener(evts[i], fn, false);
+		  }
+		}
+		
+		addMultipleListeners3(targetElement3, 'mousedown touchstart', swipeStart3);
+		addMultipleListeners3(targetElement3, 'mousemove touchmove', swipeMove3);
+		addMultipleListeners3(targetElement3, 'mouseup touchend', swipeEnd3);
+		
+		
+		
+		</script>
+        
+        
+        <script>
+        	//funzione chiamata alla pressione del bottone1
+			function apertura(){
+				
+				if(primo==true){
+					alert("L'indirizzo IP e/o la porta del pulsante non sono configurati.");
+					
+					document.getElementById("contbottone").style="display:none";
+					document.getElementById("info1").innerHTML="<b>Trascina verso destra<br>per abilitare il bottone</b>";
+					document.getElementById("info1").style="font-size:20px; display:block; color:black";
+					
+				}else{
+				
+					//disabilito bottone per evitare ulteriori chiamate nel tempo di esecuzione della chiamata HTTP
+					document.getElementById("contbottone").disabled=true;
+					
+					//preparo parametri per comporre URL chiamata
+					var user=window.localStorage.getItem("user1");
+					var password=window.localStorage.getItem("password1");
+					var ip=window.localStorage.getItem("ip1");  //85.20.48.142
+					var porta=window.localStorage.getItem("porta1"); //5001
+					
+					//compongo url chiamata
+					
+					var url="http://"+user+":"+password+"@"+ip+":"+porta+"/control/rcontrol?action=customfunction&action=sigout&profile=~Door";
+									
+					//eseguo chiamata http
+					var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+					
+					};
+					  
+					xhttp.open("GET", url, true);
+					xhttp.send();
+					
+					//al termine della chiamata riabilito il bottone
+					document.getElementById("contbottone").disabled=false;
+					
+					document.getElementById("info1").innerHTML="<b>Chiamata<br>in esecuzione...</b>";
+					document.getElementById("info1").style="font-size:20px; display:block; color:blue";
+					document.getElementById("contbottone").style="display:none";
+					
+					setTimeout(function(){
+						document.getElementById("info1").innerHTML="<b>Trascina verso destra<br>per abilitare il bottone</b>";
+						document.getElementById("info1").style="font-size:20px; display:block; color:black";
+						}, 3500);
+
+				}
+			}
+			
+			
+			
+			//funzione chiamata alla pressione del bottone2
+			function apertura2(){
+				
+				if(secondo==true){
+					alert("L'indirizzo IP e/o la porta del pulsante non sono configurati.");
+					
+					document.getElementById("contbottone1").style="display:none";
+					document.getElementById("info2").innerHTML="<b>Trascina verso destra<br>per abilitare il bottone</b>";
+					document.getElementById("info2").style="font-size:20px; display:block; color:black";
+					
+				}else{
+				
+					//disabilito bottone per evitare ulteriori chiamate nel tempo di esecuzione della chiamata HTTP
+					document.getElementById("contbottone1").disabled=true;
+					
+					//preparo parametri per comporre URL chiamata
+					var user=window.localStorage.getItem("user2");
+					var password=window.localStorage.getItem("password2");
+					var ip=window.localStorage.getItem("ip2");  //85.20.48.142
+					var porta=window.localStorage.getItem("porta2"); //5001
+					
+					//compongo url chiamata
+					
+					var url="http://"+user+":"+password+"@"+ip+":"+porta+"/control/rcontrol?action=customfunction&action=sigout&profile=~Door";
+									
+					//eseguo chiamata http
+					var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+					
+					};
+					  
+					xhttp.open("GET", url, true);
+					xhttp.send();
+					
+					//al termine della chiamata riabilito il bottone
+					document.getElementById("contbottone1").disabled=false;
+					
+					document.getElementById("info2").innerHTML="<b>Chiamata<br>in esecuzione...</b>";
+					document.getElementById("info2").style="font-size:20px; display:block; color:blue";
+					document.getElementById("contbottone1").style="display:none";
+					
+					setTimeout(function(){
+						document.getElementById("info2").innerHTML="<b>Trascina verso destra<br>per abilitare il bottone</b>";
+						document.getElementById("info2").style="font-size:20px; display:block; color:black";
+						}, 3500);
+
+				}
+			}
+        	
+			</script>
+         
+	</body>
+</html>
